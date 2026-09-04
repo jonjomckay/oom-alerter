@@ -4,13 +4,14 @@ Small foreground Linux daemon that samples `/proc` once per second and sends des
 
 ## Arch Linux package
 
-`PKGBUILD` packages a local source snapshot because this project does not yet
-have an upstream release URL. From the project root, build the package without
-placing makepkg's `src/` directory alongside the Rust `src/` directory:
+`PKGBUILD` packages tagged GitHub release assets. The initial `0.1.0` asset has
+not been published yet, so its checksum is deliberately an invalid placeholder.
+After each tagged release, update `pkgver` and replace `sha256sums` with the
+SHA-256 value from `oom-alerter-$pkgver.tar.gz.sha256`. Then build and install
+with:
 
 ```sh
-mkdir -p .makepkg/{src,pkg}
-SRCDEST="$PWD/.makepkg/src" BUILDDIR="$PWD/.makepkg/pkg" makepkg -f
+makepkg -si
 ```
 
 Install the generated package with `pacman -U oom-alerter-0.1.0-1-x86_64.pkg.tar.*`
@@ -37,9 +38,18 @@ it is no longer wanted:
 systemctl --user disable --now oom-alerter
 ```
 
-When a tagged upstream release is published, replace the PKGBUILD's empty
-`source=()` and `sha256sums=()` with the release tarball URL and its verified
-checksum, then build from that release source rather than this working tree.
+The package builds and tests with Cargo's lockfile. Validate package changes
+with `makepkg -si`, inspect package contents with `pacman -Qlp`, and run
+`namcap` when it is available. The package does not enable the service.
+
+## Releases
+
+Pushing a tag named `v<version>` triggers the release workflow. It requires the
+tag version to match `Cargo.toml`, runs the full locked CI suite, creates a
+deterministic `oom-alerter-<version>.tar.gz` source archive and SHA-256 file,
+then publishes both as GitHub Release assets. The archive contains the Rust
+package files, `systemd/oom-alerter.service`, README, and license; development
+and packaging infrastructure is excluded.
 
 ## Manual source installation
 

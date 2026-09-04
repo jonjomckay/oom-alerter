@@ -31,10 +31,10 @@ Before submitting changes, format, compile, and run the test suite:
 
 ```sh
 cargo fmt -- --check
-cargo check
-cargo test
-cargo clippy -- -D warnings
-cargo build --release
+cargo check --locked
+cargo test --locked
+cargo clippy --locked -- -D warnings
+cargo build --release --locked
 ```
 
 Use `cargo fmt` to apply formatting when needed. Keep warnings addressed where
@@ -89,23 +89,33 @@ change.
 
 ## Arch Linux packaging
 
-`PKGBUILD` is intentionally a local-source-snapshot package until an upstream
-release URL exists. Run `makepkg` with its source and build directories outside
-the project root because makepkg's default `src/` directory conflicts with the
-Rust source directory:
+`PKGBUILD` consumes the tagged GitHub release asset at
+`https://github.com/jonjomckay/oom-alerter/releases/download/v${pkgver}/oom-alerter-${pkgver}.tar.gz`.
+For each release, update `pkgver` and its verified `sha256sums` entry together
+from the published `.sha256` asset, then validate it with:
 
 ```sh
-mkdir -p .makepkg/{src,pkg}
-SRCDEST="$PWD/.makepkg/src" BUILDDIR="$PWD/.makepkg/pkg" makepkg -f
+makepkg -si
 ```
 
 The package must build with Cargo's lockfile, run tests in `check()`, install
 the binary to `/usr/bin`, and install the user unit to
 `/usr/lib/systemd/user`. It must not enable the service. Before submitting
 packaging changes, inspect the package contents with `pacman -Qlp` and run
-`namcap` when it is available. When tagged releases become available, replace
-the local-source PKGBUILD strategy with a versioned release tarball and a
-verified checksum.
+`namcap` when it is available. Do not use `SKIP` checksums. Until a matching
+release asset exists, the PKGBUILD's explicit placeholder checksum must fail
+validation.
+
+## Release workflow
+
+Tags named `v<version>` run the release workflow, which requires the tag to
+match the Cargo package version, runs the locked CI checks, creates a
+deterministic source archive from the tag's Git tree, writes its SHA-256 file,
+and publishes both assets using the repository token. The archive is rooted at
+`oom-alerter-<version>/` and excludes packaging, CI, and developer-only files
+through `.gitattributes`; it must retain `Cargo.toml`, `Cargo.lock`, `src`, the
+systemd unit, README, and LICENSE. Create and verify the release before
+updating the PKGBUILD checksum for that version.
 
 ## Code conventions
 

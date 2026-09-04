@@ -1,0 +1,9 @@
+PKGBUILD export-ignore
+.github export-ignore
+AGENTS.md export-ignore
+devenv.lock export-ignore
+devenv.nix export-ignore
+devenv.yaml export-ignore
+scripts export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore

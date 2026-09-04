@@ -20,3 +20,6 @@ devenv.local.yaml
 /.devenv/
 /target/
 /oom-alerter-*.pkg.tar.zst
+
+# Local agent/tool configuration
+/opencode.json
