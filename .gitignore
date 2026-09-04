@@ -1,0 +1,22 @@
+# Devenv
+.devenv*
+devenv.local.nix
+devenv.local.yaml
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# Rust build output
+/target/
+
+# Arch package artifacts. Do not ignore src/: it contains Rust sources.
+*.pkg.tar.*
+/.makepkg/
+
+# Local development environment and generated package archives.
+/.devenv/
+/target/
+/oom-alerter-*.pkg.tar.zst
