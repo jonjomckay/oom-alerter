@@ -102,9 +102,7 @@ The package must build with Cargo's lockfile, run tests in `check()`, install
 the binary to `/usr/bin`, and install the user unit to
 `/usr/lib/systemd/user`. It must not enable the service. Before submitting
 packaging changes, inspect the package contents with `pacman -Qlp` and run
-`namcap` when it is available. Do not use `SKIP` checksums. Until a matching
-release asset exists, the PKGBUILD's explicit placeholder checksum must fail
-validation.
+`namcap` when it is available. Do not use `SKIP` checksums.
 
 ## Release workflow
 

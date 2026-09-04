@@ -4,11 +4,9 @@ Small foreground Linux daemon that samples `/proc` once per second and sends des
 
 ## Arch Linux package
 
-`PKGBUILD` packages tagged GitHub release assets. The initial `0.1.0` asset has
-not been published yet, so its checksum is deliberately an invalid placeholder.
-After each tagged release, update `pkgver` and replace `sha256sums` with the
-SHA-256 value from `oom-alerter-$pkgver.tar.gz.sha256`. Then build and install
-with:
+`PKGBUILD` packages tagged GitHub release assets. After each tagged release,
+update `pkgver` and its verified `sha256sums` entry from the published
+`oom-alerter-$pkgver.tar.gz.sha256` asset. Then build and install with:
 
 ```sh
 makepkg -si

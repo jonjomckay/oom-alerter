@@ -9,7 +9,7 @@ license=('MIT')
 depends=('dbus')
 makedepends=('rust')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/jonjomckay/oom-alerter/releases/download/v${pkgver}/oom-alerter-${pkgver}.tar.gz")
-sha256sums=('REPLACE_WITH_RELEASE_TARBALL_SHA256')
+sha256sums=('a049fbcbe8aeb2adb2ecebcbd815eee108fe2c3edb2809bb811a0999ca8a4494')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
