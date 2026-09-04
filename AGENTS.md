@@ -57,8 +57,24 @@ cargo run -- --once
 ```
 
 The interval and alert policy are command-line options. Preserve the existing
-defaults and semantics unless a change explicitly requires otherwise. A
-desktop notification server on the session D-Bus is required for notifications;
+defaults and semantics unless a change explicitly requires otherwise. Defaults
+are:
+- MemAvailable warning: 3 GiB (`--warning 3GiB`)
+- MemAvailable critical: 768 MiB (`--critical 768MiB`)
+- Hysteresis: 256 MiB (`--hysteresis 256MiB`)
+- Dwell: 10 seconds (`--dwell 10`)
+- PSI some warning: 10% sustained over dwell (`--psi-some-warning 10`)
+- PSI full critical: 5% sustained over dwell (`--psi-full-critical 5`)
+- Decline warning rate: 1 GiB/min below 6 GiB MemAvailable (`--decline-warning 1GiB --decline-warning-gate 6GiB`)
+- Decline critical rate: 2 GiB/min below 4 GiB MemAvailable (`--decline-critical 2GiB --decline-critical-gate 4GiB`)
+- Warning reminder repeat: 5 minutes / 300 seconds (`--warning-repeat 300`)
+- Critical reminder repeat: 60 seconds (`--critical-repeat 60`)
+
+Warning to Critical transition escalates immediately without dwell delay.
+Recovery requires all active triggers to clear, including half-threshold exit
+hysteresis for PSI metrics.
+
+A desktop notification server on the session D-Bus is required for notifications;
 the application must not assume that a particular compositor or window manager
 provides one.
 

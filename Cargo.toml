@@ -1,6 +1,6 @@
 [package]
 name = "oom-alerter"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Desktop notification daemon for pre-OOM memory pressure on Linux"
 license = "MIT"

@@ -1,6 +1,6 @@
 # Update pkgver and sha256sums together after each tagged release.
 pkgname=oom-alerter
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc='Desktop notification daemon for pre-OOM memory pressure on Linux'
 arch=('x86_64')
@@ -9,7 +9,8 @@ license=('MIT')
 depends=('dbus')
 makedepends=('rust')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/jonjomckay/oom-alerter/releases/download/v${pkgver}/oom-alerter-${pkgver}.tar.gz")
-sha256sums=('a049fbcbe8aeb2adb2ecebcbd815eee108fe2c3edb2809bb811a0999ca8a4494')
+# Release asset SHA-256 placeholder until release workflow creates v0.1.1 asset
+sha256sums=('0000000000000000000000000000000000000000000000000000000000000000')
 
 build() {
   cd "$srcdir/$pkgname-$pkgver"
